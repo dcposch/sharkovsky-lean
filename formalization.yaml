@@ -1,0 +1,111 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4
+version: "v0.4"
+
+project:
+  name: "sharkovsky"
+  description: >-
+    Lean 4 / Mathlib proof that a continuous self-map of an interval with a
+    point of least period 3 has a point of least period n for every n ≥ 1.
+    This is the periodic-point half of Li–Yorke (1975) and the period-3 case
+    of Sharkovsky (1964). The compared statement is
+    Sharkovsky.period_three_implies_all_periods.
+  authors:
+    - "Dan Clemens Posch"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Dan Clemens Posch"
+
+classification:
+  arxiv: ["math.DS"]
+  msc2020: ["37E05", "26A18"]
+
+sources:
+  - title: "Period Three Implies Chaos"
+    authors:
+      - "Tien-Yien Li"
+      - "James A. Yorke"
+    id: "doi:10.2307/2318254"
+    type: "article"
+    location: "Amer. Math. Monthly 82 (1975), no. 10, 985–992"
+    relationship: "independently-proves"
+    note: >-
+      Formalizes the periodic-point theorem: a continuous interval map with
+      a point of least period 3 has a point of least period n for every
+      n ≥ 1. Does not formalize the Li–Yorke scrambled set.
+    license: "unknown"
+    author_endorsement: "not-contacted"
+  - title: "Co-existence of cycles of a continuous mapping of the line into itself"
+    authors:
+      - "O. M. Sharkovsky"
+    type: "article"
+    location: "Ukrain. Mat. Zh. 16 (1964), 61–71"
+    relationship: "background"
+    note: >-
+      The 1964 forcing theorem of which period 3 is the first case. The
+      full Sharkovsky order and the realization theorem are not compared.
+    license: "unknown"
+    author_endorsement: "n/a"
+
+related_formalizations:
+  - id: "https://github.com/b-mehta/sharkovsky"
+    relationship: "independent"
+    note: >-
+      Mehta, CPP 2023, Lean 3 formalisation of the full Sharkovsky forcing
+      and realization theorems. This project is a Lean 4 / Mathlib proof of
+      the period-3 case only.
+
+status:
+  scope: >-
+    Compared: Sharkovsky.period_three_implies_all_periods, for a continuous
+    self-map of an order-connected set I ⊆ ℝ with a point of least period 3.
+    Not compared: the full Sharkovsky order, the realization theorem, or the
+    Li–Yorke scrambled set.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Quot.sound", "Classical.choice"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["grok-4.6"]
+      framework: "Grok Build TUI"
+      tool_setup: "AI-assisted Lean 4 with Mathlib v4.32.0; local lake verify"
+      cost:
+        wall_time: "one session"
+        spend_usd: "not tracked"
+        hardware: "local machine"
+      prompting_notes: "Li–Yorke period-3 IVT covering; no native_decide"
+  spend_usd: "not tracked"
+  notes: >-
+    Coordinator specified wrap-if-Lean-4-pin-else-prove. Mehta’s CPP 2023
+    development is Lean 3; Mathlib Dynamics has periodic points but not
+    Sharkovsky. This lane proved the period-3 theorem against Mathlib.
+
+fidelity:
+  divergences: >-
+    Stated for ContinuousOn a MapsTo-invariant OrdConnected set rather than
+    a closed bounded interval; the classical Icc case is included. Least
+    period is Function.minimalPeriod. The scrambled-set half of Li–Yorke
+    and the rest of the Sharkovsky order are omitted.
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "none"
+  notes: "Statement surface follows Li–Yorke’s periodic-point theorem."
+
+alignment:
+  namespace: "Sharkovsky"
+  statements:
+    - source: "Li–Yorke, Theorem 1 (periodic points); Sharkovsky 1964, period 3"
+      lean: "Sharkovsky.period_three_implies_all_periods"
+      module: "Challenge"
+      status: "proved"
+      note: >-
+        ContinuousOn self-map of an interval; a point of least period 3
+        forces a point of least period n for every n > 0.
+
+acknowledgements: >-
+  Mathlib; Li–Yorke 1975; Sharkovsky 1964; Mehta’s Lean 3 Sharkovsky
+  development (independent, not a port); Palomar template.
